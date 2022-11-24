@@ -63,7 +63,7 @@ class _CreatePostState extends State<CreatePost> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('/earn.jpg'),
+          image: AssetImage('assets/earn.jpg'),
           fit: BoxFit.cover,
         ),
       ),

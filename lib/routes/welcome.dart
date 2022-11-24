@@ -42,7 +42,7 @@ class _WelcomeState extends State<Welcome> {
       return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('/background.jpg'),
+            image: AssetImage('assets/background.jpg'),
             fit: BoxFit.cover,
           ),
         ),

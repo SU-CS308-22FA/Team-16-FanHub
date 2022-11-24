@@ -67,7 +67,7 @@ class _SignupState extends State<Signup> {
       return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('/football.jpg'),
+            image: AssetImage('assets/football.jpg'),
             fit: BoxFit.cover,
           ),
         ),

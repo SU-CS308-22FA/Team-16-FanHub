@@ -127,10 +127,12 @@ class _FeedState extends State<Feed> {
             //floatingActionButton: FloatingActionButton(child: Text('+'),onPressed: (){_loadFeed();},),//Navigator.pushNamed(context, 'createPost');},),
             //floatingActionButton: FloatingActionButton(child: Text('+'),onPressed: (){ath.signOut();},),
             appBar: AppBar(
+              centerTitle: true,
               backgroundColor: Colors.red,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
+                  Navigator.pop(context);
                   ath.signOut();
                 },
               ),

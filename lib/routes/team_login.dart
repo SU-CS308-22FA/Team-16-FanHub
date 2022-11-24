@@ -65,7 +65,7 @@ class _SignupState extends State<TeamSignup> {
       return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('/manager.jpg'),
+            image: AssetImage('assets/manager.jpg'),
             fit: BoxFit.cover,
           ),
         ),
