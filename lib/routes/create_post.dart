@@ -20,6 +20,32 @@ class CreatePost extends StatefulWidget {
 class _CreatePostState extends State<CreatePost> {
   List<dynamic> posts = [];
 
+  void _loadFeed(List<dynamic> posts) async {
+    FirebaseAuth _auth;
+    User? _user;
+    _auth = FirebaseAuth.instance;
+    _user = _auth.currentUser;
+    print(_user.toString());
+    if (_user != null) {
+      var all = await FirebaseFirestore.instance
+          .collection("posts")
+          .get()
+          .catchError((error) => print("Failed to get posts: $error"));
+
+      all.docs.forEach(
+        (doc) => {
+          posts.add(
+            Post(
+              title: doc['title'],
+              description: doc['description'],
+              photo: doc['image'],
+            ),
+          ),
+        },
+      );
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   String title = "";
   String description = "";
@@ -258,7 +284,7 @@ class _CreatePostState extends State<CreatePost> {
                                     DBservice db = DBservice();
                                     db.addPost(title, image_url, description);
                                     _loadFeed(posts);
-                                    Navigator.pop(context);
+                                    Navigator.pushNamed(context, 'welcome');
                                   }
                                 },
                                 child: const Text('Done'),
