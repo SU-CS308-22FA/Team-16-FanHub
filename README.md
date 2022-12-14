@@ -22,7 +22,8 @@ You can download the source code by pressing “Code” located in the top right
 
 After downloading the file you should open the code editor of choice and run the following commands in web folder: flutter run
 
-## Directory Structure:  ………..BURAYI TAMAMLA………
+## Directory Structure: 
+Our route main.dart is located in the lib folder. All of the views that we have are stored in the routes folder which is also located in the lib folder. We use db.dart for our database related functions, and it is located in the services folder together with auth.dart in lib folder. The forum and the campaign templates we have are stored in the UI file located in the lib file. All the classes we have together with their attributes are stored in the models file also located in the lib file. 
 
 ## Deployment:
 To deploy your application with GitHub Pages, you can follow the steps below:
