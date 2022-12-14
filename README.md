@@ -2,6 +2,8 @@
 
 Course Project for CS308 Software Engineering Course in Sabanci University, 2022-2023 Fall
 
+Latest code can be found under branch <burak>
+
 FANHUB is a web application created for football fans and TFF teams. This application is a medium where the teams can share their campaigns for users to view in their feeds in order for teams to gain more fans and raise more awareness.The main goal of FANHUB is for teams to build a community within the fanbase. Hence, there will be forums for each team where the supporters can interact. Our web application is user friendly, so that people from different backgrounds can access while teams reach to a broader fanbase.
 
 
