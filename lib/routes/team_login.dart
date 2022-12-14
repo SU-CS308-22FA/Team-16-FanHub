@@ -21,6 +21,7 @@ class _SignupState extends State<TeamSignup> {
   String password = "";
   String name = "";
   String _message = "";
+  String email = "";
 
   void setMessage(String message) {
     setState(() {
@@ -54,10 +55,12 @@ class _SignupState extends State<TeamSignup> {
       if (event == null) {
         setState(() {
           x = true;
+          print(event);
         });
       } else {
-        setState(() {
+        var user = setState(() {
           x = false;
+          print(event);
         });
       }
     });
@@ -83,7 +86,7 @@ class _SignupState extends State<TeamSignup> {
                   Container(
                     alignment: Alignment.center,
                     child: const Text(
-                      'Team Entrance',
+                      'Team Sign Up',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -102,7 +105,7 @@ class _SignupState extends State<TeamSignup> {
                             height: screenHeight / 12,
                           ),
                           const Text(
-                            'Team Name',
+                            'Name',
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 18,
@@ -130,7 +133,7 @@ class _SignupState extends State<TeamSignup> {
                                 Icons.account_circle_outlined,
                                 color: Colors.white70,
                               ),
-                              hintText: 'Enter team\'s name: ',
+                              hintText: 'Enter your name: ',
                               hintStyle: TextStyle(color: Colors.white70),
                             ),
                           ),
@@ -138,7 +141,57 @@ class _SignupState extends State<TeamSignup> {
                             height: 16,
                           ),
                           const Text(
-                            'Authority ID',
+                            'Email',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 18,
+                            ),
+                          ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Email field can not be empty!';
+                              } else {
+                                String trimmedValue = value.trim();
+                                if (trimmedValue.isEmpty) {
+                                  return 'Please enter email!';
+                                }
+                                if (!EmailValidator.validate(trimmedValue)) {
+                                  return 'Please enter a valid email!';
+                                }
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              if (value != null) {
+                                email = value;
+                              }
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            style: const TextStyle(color: Colors.white70),
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white70),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.only(top: 10.0),
+                              prefixIcon: Icon(
+                                Icons.mail,
+                                color: Colors.white70,
+                              ),
+                              hintText: 'Enter your email: ',
+                              hintStyle: TextStyle(
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          const Text(
+                            'Password',
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 18,
@@ -148,14 +201,14 @@ class _SignupState extends State<TeamSignup> {
                             obscureText: true,
                             validator: (value) {
                               if (value == null) {
-                                return 'Authority ID field can not be empty!';
+                                return 'Password field can not be empty!';
                               } else {
                                 String trimmedValue = value.trim();
                                 if (trimmedValue.isEmpty) {
-                                  return 'Authority ID field can not be empty!';
+                                  return 'Password field can not be empty!';
                                 }
-                                if (trimmedValue.length < 2) {
-                                  return 'Authority ID must be longer than 2 characters!';
+                                if (trimmedValue.length < 8) {
+                                  return 'Password must be longer than 8 characters!';
                                 }
                               }
                               return null;
@@ -189,6 +242,59 @@ class _SignupState extends State<TeamSignup> {
                               ),
                             ),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'Password Again',
+                            style:
+                                TextStyle(fontSize: 18, color: Colors.white70),
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Password field can not be empty!';
+                              } else {
+                                String trimmedValue = value.trim();
+                                if (trimmedValue.isEmpty) {
+                                  return 'Password field can not be empty!';
+                                }
+                                if (trimmedValue.length < 8) {
+                                  return 'Password must be longer than 8 characters!';
+                                }
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              if (value != null) {
+                                password = value;
+                              }
+                            },
+                            keyboardType: TextInputType.name,
+                            style: const TextStyle(color: Colors.white70),
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white70),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    30.0,
+                                  ),
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                top: 10,
+                              ),
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: Colors.white70,
+                              ),
+                              hintText: 'Enter your password again: ',
+                              hintStyle: TextStyle(
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             height: screenHeight / 12,
                           ),
@@ -202,7 +308,7 @@ class _SignupState extends State<TeamSignup> {
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
                                       _formKey.currentState!.save();
-                                      // ath.loginWithMailAndPass(mail, pass)
+                                      ath.signUpTeam(name, email, password);
                                     }
                                   },
                                   child: Text('Done'),

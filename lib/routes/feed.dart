@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_fan/models/post.dart';
+import 'package:fl_fan/routes/search.dart';
 import 'package:fl_fan/services/db.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -31,31 +32,26 @@ class _FeedState extends State<Feed> {
     _user = _auth.currentUser;
     print(_user.toString());
     if (_user != null) {
+      var curr_user = await FirebaseFirestore.instance
+          .collection('users')
+          .where('uid', isEqualTo: _auth.currentUser!.uid)
+          .get();
+      if (curr_user.docs[0]['is_team']) {
+        setState(() {
+          // if team entered
+          x = 1;
+        });
+      } else {
+        setState(() {
+          // if user entered
+          x = 2;
+        });
+      }
       // print("c  ${_user.uid}");
       var all = await FirebaseFirestore.instance
           .collection("posts")
           .get()
           .catchError((error) => print("Failed to get posts: $error"));
-      // .where('title', isNull: false)
-      // print('-------------');
-      // print('${all.docs[0]['title']}');
-      // print('-------------');
-      // print('${all.docs[0]['description']}');
-      // print('-------------');
-      // print('${all.docs[0]['date']}');
-      // print('-------------');
-      // print('${all.docs[0]['image']}');
-
-      // posts.add(
-      //   Post(
-      //     title: '${all.docs[0]['title']}',
-      //     description: '${all.docs[0]['description']}',
-      //     date: '${all.docs[0]['date']}',
-      //     photo: '${all.docs[0]['image']}',
-      //   ),
-      // );
-      // following = all.docs[0]['following'];
-      // print("t ${following[0]}");
 
       all.docs.forEach(
         (doc) => {
@@ -63,40 +59,84 @@ class _FeedState extends State<Feed> {
             Post(
               title: doc['title'],
               description: doc['description'],
-              // date: all.docs[0]['date'],
               photo: doc['image'],
+              // likeCt: doc['like_ct'],
             ),
           ),
         },
       );
     }
-    // var feed_post = await FirebaseFirestore.instance.collection('posts').get();
-    // feed_post.docs.forEach(
-    //   (doc) => {
-    //     if (doc['active'] == "active")
-    //       {
-    //         print("a"),
-    //         posts.add(Post(
-    //           title: doc['title'],
-    //           description: doc['description'],
-    //           date: doc['date'],
-    //           photo: doc['photo'],
-    //         ))
-    //       }
-    //   },
-    // );
   }
 
+  // void getUserDetails() async {
+  //   // _auth.authStateChanges().listen((event) async {
+  //   //   if (event == null) {
+  //   //     setState(() {
+  //   //       // if no one is entered
+  //   //       x = 0;
+  //   //     });
+  //   //   }
+  //   // });
+
+  //   var curr_user = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .where('uid', isEqualTo: _auth.currentUser!.uid)
+  //       .get();
+  //   if (curr_user.docs[0]['is_team']) {
+  //     setState(() {
+  //       // if team entered
+  //       x = 1;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       // if user entered
+  //       x = 2;
+  //     });
+  //   }
+  //   // print(curr_user.docs[0]['is_team'] == true
+  //   //     ? 'It IS A TEAMMMMM!'
+  //   //     : 'NOOOOOOO!');
+  // }
+
   void initState() {
-    super.initState();
-    print("init1");
+    // super.initState();
+    print("init_feed");
+    // getUserDetails();
     _loadFeed(posts);
   }
 
   final pc = PageController(initialPage: 0);
-
+  int x = 0;
   @override
   Widget build(BuildContext context) {
+    // _auth.authStateChanges().listen((event) async {
+    //   if (event == null) {
+    //     setState(() {
+    //       // if no one is entered
+    //       x = 0;
+    //     });
+    //   } else {
+    //     var curr_user = await FirebaseFirestore.instance
+    //         .collection('users')
+    //         .where('uid', isEqualTo: _auth.currentUser!.uid)
+    //         .get();
+    //     if (curr_user.docs[0]['is_team']) {
+    //       setState(() {
+    //         // if team entered
+    //         x = 1;
+    //       });
+    //     } else {
+    //       setState(() {
+    //         // if user entered
+    //         x = 2;
+    //       });
+    //     }
+    //     // print(curr_user.docs[0]['is_team'] == true
+    //     //     ? 'It IS A TEAMMMMM!'
+    //     //     : 'NOOOOOOO!');
+    //   }
+    // });
+
     int _selectedIndex = 0;
     void _onItemTapped(int index) {
       setState(() {
@@ -104,10 +144,10 @@ class _FeedState extends State<Feed> {
         print(_selectedIndex);
       });
 
-      if (_selectedIndex == 2) {
+      if (_selectedIndex == 1) {
         pc.jumpToPage(1);
       }
-      if (_selectedIndex == 3) {
+      if (_selectedIndex == 2) {
         pc.jumpToPage(2);
       }
     }
@@ -124,8 +164,6 @@ class _FeedState extends State<Feed> {
           ),
           child: Scaffold(
             backgroundColor: Colors.transparent.withOpacity(0.3),
-            //floatingActionButton: FloatingActionButton(child: Text('+'),onPressed: (){_loadFeed();},),//Navigator.pushNamed(context, 'createPost');},),
-            //floatingActionButton: FloatingActionButton(child: Text('+'),onPressed: (){ath.signOut();},),
             appBar: AppBar(
               centerTitle: true,
               backgroundColor: Colors.red,
@@ -133,24 +171,35 @@ class _FeedState extends State<Feed> {
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
-                  ath.signOut();
+                  _auth.signOut();
+                  // ath.signOut();
                 },
               ),
               actions: [
+                x == 1
+                    ? IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'create');
+                        },
+                        icon: const Icon(Icons.add),
+                        tooltip: 'Add Campaign!',
+                      )
+                    : IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'forum');
+                        },
+                        icon: const Icon(Icons.forum),
+                        tooltip: 'Jump to Forum!',
+                      ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 50,
+                ),
                 IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'create');
+                    Navigator.pushNamed(context, 'issue');
                   },
-                  icon: const Icon(Icons.add),
-                  tooltip: 'Add Campaign',
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 100,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.message),
-                  tooltip: 'Jump to Forum',
+                  icon: Icon(Icons.help),
+                  tooltip: 'Need help?',
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 100,
@@ -195,6 +244,7 @@ class _FeedState extends State<Feed> {
             ),
           ),
         ),
+        SearchView(analytics: widget.analytics, observer: widget.observer),
       ],
     );
   }

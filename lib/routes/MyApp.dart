@@ -1,4 +1,7 @@
+import 'package:fl_fan/routes/create_forum.dart';
 import 'package:fl_fan/routes/create_post.dart';
+import 'package:fl_fan/routes/forum.dart';
+import 'package:fl_fan/routes/issue.dart';
 import 'package:fl_fan/routes/login.dart';
 import 'package:fl_fan/routes/signup.dart';
 import 'package:fl_fan/routes/team_login.dart';
@@ -93,6 +96,18 @@ class _ConnectedFirebaseState extends State<ConnectedFirebase> {
               observer: ConnectedFirebase.observer,
             ),
         'create': (context) => CreatePost(
+              analytics: ConnectedFirebase.analytics,
+              observer: ConnectedFirebase.observer,
+            ),
+        'forum': (context) => Forum(
+              analytics: ConnectedFirebase.analytics,
+              observer: ConnectedFirebase.observer,
+            ),
+        'create_forum': (context) => CreateForum(
+              analytics: ConnectedFirebase.analytics,
+              observer: ConnectedFirebase.observer,
+            ),
+        'issue': (context) => Issue(
               analytics: ConnectedFirebase.analytics,
               observer: ConnectedFirebase.observer,
             ),

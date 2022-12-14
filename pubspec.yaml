@@ -80,6 +80,9 @@ flutter:
     - assets/earn.jpg
     - assets/manager.jpg
     - assets/football.jpg
+    - assets/fans_forum.jpg
+    - assets/issue.jpg
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -23,11 +23,11 @@ class AuthService {
     }
   }
 
-  Future<void> signUpUser(String name, String email, String password) async {
+  Future<void> signUpTeam(String name, String email, String password) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      db.addUser(name, email, password);
+      db.addUser(name, email, password, true, userCredential.user!.uid);
       print(userCredential.toString());
     } on FirebaseException catch (e) {
       print(e.toString());
@@ -39,23 +39,27 @@ class AuthService {
     }
   }
 
-  // Future signupWithMailAndPass(String mail, String pass) async {
-  //   try {
-  //     UserCredential result = await _auth.createUserWithEmailAndPassword(
-  //         email: mail, password: pass);
-  //     User user = result.user!;
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  Future<void> signUpUser(String name, String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      db.addUser(name, email, password, false, userCredential.user!.uid);
+      print(userCredential.toString());
+    } on FirebaseException catch (e) {
+      print(e.toString());
+      if (e.code == 'email-already-in-use') {
+        print('Email already exists!');
+      } else if (e.code == 'weak-password') {
+        print('Weak password: add uppercase, lowercase, special char');
+      }
+    }
+  }
 
   Future loginWithMailAndPass(String mail, String pass) async {
     try {
       UserCredential result =
           await _auth.signInWithEmailAndPassword(email: mail, password: pass);
-      User user = result.user!;
-    } catch (e) {
+    } on FirebaseException catch (e) {
       print(e.toString());
       return null;
     }
