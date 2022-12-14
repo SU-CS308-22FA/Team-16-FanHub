@@ -2,8 +2,6 @@
 
 Course Project for CS308 Software Engineering Course in Sabanci University, 2022-2023 Fall
 
-Latest code can be found under branch <burak>
-
 FANHUB is a web application created for football fans and TFF teams. This application is a medium where the teams can share their campaigns for users to view in their feeds in order for teams to gain more fans and raise more awareness.The main goal of FANHUB is for teams to build a community within the fanbase. Hence, there will be forums for each team where the supporters can interact. Our web application is user friendly, so that people from different backgrounds can access while teams reach to a broader fanbase.
 
 
@@ -14,7 +12,7 @@ FANHUB does not require any installation to run. Users can simply visit https://
 As our web application is an ongoing project we might have some bugs, if you find a bug you can report it by using github "Issues" tab on the left corner of the repository navigation bar and click "New issue". Another way of reporting bugs is through the application. You can use the "Help" tab and our admins will be notified.
 It is a good idea to give details about the issue while reporting so that the issue can be dealt with accordingly.
 
-Even though it is not a bug, one improvement that can be made is when publishing a campaign. Currently the URL is needed of the photo that is wanted to publish, an improvement can be made through using a image picker instead of URL. Besides that, the forum page does not open on the first try. It only loads on the second click on the forum button. 
+Even though it is not a bug, one improvement that can be made is when publishing a campaign. Currently the URL is needed of the photo that is wanted to publish, an improvement can be made through using a image picker instead of URL. Besides that, the forum page does not open on the first try. It only loads on the second click on the forum button. Another issue is that the search bar does not show results if the word is not written fully.
 
 ## Developer Documentation:
 
