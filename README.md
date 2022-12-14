@@ -9,7 +9,8 @@ FANHUB is a web application created for football fans and TFF teams. This applic
 
 FANHUB does not require any installation to run. Users can simply visit https://burakkarakoc.github.io/fanhub_tff/#/ and start their journey. First, users need to sign-up, then login with their credentials. After these steps, users will be able to benefit from the various features of the application.
 
-As our web application is an ongoing project we might have some bugs, if you find a bug you can report it by using github "Issues" tab on the left corner of the repository navigation bar and click "New issue". It is a good idea to give details about the issue while reporting so that the issue can be dealt with accordingly.
+As our web application is an ongoing project we might have some bugs, if you find a bug you can report it by using github "Issues" tab on the left corner of the repository navigation bar and click "New issue". Another way of reporting bugs is through the application. You can use the "Help" tab and our admins will be notified.
+It is a good idea to give details about the issue while reporting so that the issue can be dealt with accordingly.
 
 Even though it is not a bug, one improvement that can be made is when publishing a campaign. Currently the URL is needed of the photo that is wanted to publish, an improvement can be made through using a image picker instead of URL. 
 
