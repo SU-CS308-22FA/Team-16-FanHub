@@ -16,6 +16,8 @@ Even though it is not a bug, one improvement that can be made is when publishing
 
 ## Developer Documentation:
 
+API documentation can be found under branch <burak> /doc/api
+
 The source code for the project can be found in: https://github.com/SU-CS308-22FA/Team-16-FanHub/tree/main 
 
 You can download the source code by pressing “Code” located in the top right of the website and click “Download ZIP”
