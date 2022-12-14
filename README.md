@@ -20,7 +20,7 @@ The source code for the project can be found in: https://github.com/SU-CS308-22F
 
 You can download the source code by pressing “Code” located in the top right of the website and click “Download ZIP”
 
-After downloading the file you should open the code editor of choice and run the following commands: …………..BURAYI TAMAMLA…………
+After downloading the file you should open the code editor of choice and run the following commands in web folder: flutter run
 
 ## Directory Structure:  ………..BURAYI TAMAMLA………
 
