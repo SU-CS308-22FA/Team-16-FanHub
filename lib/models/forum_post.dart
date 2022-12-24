@@ -3,11 +3,13 @@ class ForumPost {
   String description;
   String sender_id;
   String? comments;
+  String post_id;
 
   ForumPost({
     required this.title,
     required this.description,
     required this.sender_id,
+    required this.post_id,
     this.comments,
   });
 

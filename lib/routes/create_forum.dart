@@ -32,7 +32,7 @@ class _CreateForumState extends State<CreateForum> {
       db.addForumPost(
         title,
         description,
-        uid,
+        _auth.currentUser!,
       );
       var all = await FirebaseFirestore.instance
           .collection("forum_posts")
@@ -46,6 +46,8 @@ class _CreateForumState extends State<CreateForum> {
               title: doc['title'],
               description: doc['description'],
               sender_id: doc['sender_id'],
+              post_id: doc['post_id'],
+
               // comments:
               //     doc['comments'] != null ? doc['sender_id'] : 'No Comments',
             ),

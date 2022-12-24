@@ -8,12 +8,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import '../models/post.dart';
 
 class PostTile extends StatefulWidget {
-  const PostTile(
-      {required this.post,
-      required this.delete,
-      required this.icon,
-      required this.editIcon,
-      required this.edit});
+  const PostTile({
+    required this.post,
+    required this.delete,
+    required this.icon,
+    required this.editIcon,
+    required this.edit,
+  });
   final Post post;
   final VoidCallback delete;
   final VoidCallback edit;

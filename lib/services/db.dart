@@ -1,6 +1,7 @@
 import 'package:cloud_firestore_web/cloud_firestore_web.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_fan/models/forum_post.dart';
 import 'package:fl_fan/models/post.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,20 @@ class DBservice {
         'title': title,
         'description': description,
         'image': image,
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future editForumPost(
+    ForumPost post,
+    String title,
+    String description,
+  ) async {
+    forumPostCollection.doc(post.post_id).set(
+      {
+        'title': title,
+        'description': description,
       },
       SetOptions(merge: true),
     );
@@ -99,6 +114,31 @@ class DBservice {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
+  Future addForumPost(
+    String title,
+    String description,
+    User user,
+  ) async {
+    forumPostCollection
+        .add({
+          'title': title,
+          'description': description,
+          'sender_id': user.uid,
+          'comments': 0,
+          'post_id': null,
+        })
+        .then(
+          (value) => value.set({
+            'title': title,
+            'description': description,
+            'sender_id': user.uid,
+            'comments': 0,
+            'post_id': value.id,
+          }),
+        )
+        .catchError((error) => print("Failed to add forum post: $error"));
+  }
+
   Future addIssue(
     String title,
     String message,
@@ -117,29 +157,6 @@ class DBservice {
               'uid': uid,
             }))
         .catchError((error) => print("Failed to add issue: $error"));
-  }
-
-  Future addForumPost(
-    // String poster,
-    String title,
-    String description,
-    String sender_id,
-    // String date,
-    // int likeCt,
-    // List comments,
-    // int commentCt,
-    // String active,
-  ) async {
-    forumPostCollection
-        .add({
-          // 'poster': poster,
-          'title': title,
-          'description': description,
-          'sender_id': sender_id,
-          'comments': 0,
-        })
-        .then((value) => print("Forum Post Added"))
-        .catchError((error) => print("Failed to add forum post: $error"));
   }
 
   Future addUser(String name, String email, String password, bool is_team,
