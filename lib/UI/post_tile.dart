@@ -8,8 +8,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import '../models/post.dart';
 
 class PostTile extends StatefulWidget {
-  const PostTile({required this.post});
+  const PostTile(
+      {required this.post,
+      required this.delete,
+      required this.icon,
+      required this.editIcon,
+      required this.edit});
   final Post post;
+  final VoidCallback delete;
+  final VoidCallback edit;
+  final Widget icon;
+  final Widget editIcon;
   // final VoidCallback dislike;
   // final VoidCallback like;
 
@@ -18,6 +27,7 @@ class PostTile extends StatefulWidget {
 }
 
 class _PostTileState extends State<PostTile> {
+  String _message = "";
   DBservice db = DBservice();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String? url1;
@@ -31,9 +41,94 @@ class _PostTileState extends State<PostTile> {
     }
   }
 
-  // void initState() {
-  //   super.initState();
-  // }
+  void _addLike(User user, Post post) async {
+    await db.addLike(user, post);
+  }
+
+  Future<bool> contains() {
+    return db.contains(_auth.currentUser, widget.post);
+  }
+
+  void report_post_as_issue(Post post) async {
+    db.addIssue(post.title, post.description, _auth.currentUser!.uid);
+  }
+
+/*
+  void updateLike(String? postid) async {
+    var currPost =
+        await FirebaseFirestore.instance.collection('posts').doc(postid).get();
+    var currLikes = currPost.get('likes');
+    await FirebaseFirestore.instance
+        .collection('notifications')
+        .doc(postid)
+        .delete();
+
+    bool flag;
+    String notID;
+    if (currLikes.contains(username)) {
+      currLikes.remove(username);
+      var collection = FirebaseFirestore.instance.collection('posts');
+      print(currLikes);
+      collection.doc(postid);
+      collection.doc(postid).update({"likes": currLikes});
+      collection.doc(postid);
+      collection.doc(postid).update({"likeCt": currLikes.length});
+      setState(() {
+        widget.post.likeCt = currLikes.length;
+      });
+    } else {
+      currLikes.add(username);
+      var collection = FirebaseFirestore.instance.collection('posts');
+      print(currLikes);
+      collection.doc(postid);
+      collection.doc(postid).update({"likes": currLikes});
+      collection.doc(postid).update({"likeCt": currLikes.length});
+      setState(() {
+        widget.post.likeCt = currLikes.length;
+      });
+    }
+  }
+*/
+  Future<void> showAlertDialog(String title, String message) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: Text(message),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'OK',
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void setMessage(String message) {
+    setState(() {
+      _message = message;
+    });
+  }
 
   int like_ct = 0;
 
@@ -57,15 +152,48 @@ class _PostTileState extends State<PostTile> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                widget.post.title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+            Row(
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(),
                 ),
-              ),
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      widget.post.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: widget.edit,
+                        icon: widget.editIcon,
+                      ),
+                      IconButton(
+                        tooltip: 'Click to report',
+                        color: Colors.red,
+                        onPressed: () {
+                          report_post_as_issue(widget.post);
+                          showAlertDialog(
+                              'Your report has been recieved for this post\nYou can display your issues using help tab above corner!',
+                              'Issue title: ${widget.post.title} \nIssue description: ${widget.post.description}');
+                        },
+                        icon: const Icon(Icons.report_outlined),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 12,
@@ -93,7 +221,11 @@ class _PostTileState extends State<PostTile> {
             ),
             Row(
               children: [
-                Spacer(),
+                IconButton(
+                  onPressed: widget.delete,
+                  icon: widget.icon,
+                ),
+                const Spacer(),
                 IconButton(
                   splashRadius: 20,
                   icon: const Icon(
@@ -103,9 +235,9 @@ class _PostTileState extends State<PostTile> {
                   onPressed: () {
                     //widget.updateLike(widget.post.postid),
                     // updateLike(widget.post.postid);
-                    setState(() {
-                      like_ct++;
-                    });
+                    _addLike(_auth.currentUser!, widget.post);
+                    print(widget.post.post_id);
+                    contains();
                   },
                 ),
                 Text(
@@ -115,7 +247,7 @@ class _PostTileState extends State<PostTile> {
                   splashRadius: 20,
                   icon: const Icon(
                     Icons.thumb_down_alt_outlined,
-                    color: Colors.red,
+                    color: true ? Colors.red : Colors.black,
                   ),
                   onPressed: () {
                     //widget.updateLike(widget.post.postid),

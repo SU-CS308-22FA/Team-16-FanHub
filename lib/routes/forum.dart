@@ -28,7 +28,7 @@ class _ForumState extends State<Forum> {
         .collection("forum_posts")
         .get()
         .catchError((error) => print("Failed to get posts: $error"));
-
+    forum_posts.clear();
     all.docs.forEach(
       (doc) => {
         forum_posts.add(
@@ -43,12 +43,12 @@ class _ForumState extends State<Forum> {
     );
   }
 
-  void initState() {
-    // super.initState();
-    print("init_forum");
-    // forum_posts = [];
-    _loadForum(forum_posts);
-  }
+  // void initState() {
+  //   // super.initState();
+  //   print("init_forum");
+  //   // forum_posts = [];
+  //   _loadForum(forum_posts);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +70,6 @@ class _ForumState extends State<Forum> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.red,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
           actions: [
             IconButton(
               onPressed: () {
@@ -83,6 +77,18 @@ class _ForumState extends State<Forum> {
               },
               icon: const Icon(Icons.add),
               tooltip: 'Add to Forum!',
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 100,
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  _loadForum(forum_posts);
+                });
+              },
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Refresh Forum!',
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width / 100,

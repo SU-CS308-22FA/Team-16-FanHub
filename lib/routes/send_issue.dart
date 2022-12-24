@@ -79,6 +79,16 @@ class _IssueState extends State<Issue> {
         ),
       ),
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'my_issues');
+              },
+              icon: const Icon(Icons.book),
+            ),
+          ],
+        ),
         backgroundColor: Colors.transparent.withOpacity(0.5),
         body: SingleChildScrollView(
           child: Form(
@@ -218,7 +228,7 @@ class _IssueState extends State<Issue> {
                                         title, desc, _auth.currentUser!.uid);
                                   }
                                   showAlertDialog('Success',
-                                      'Your issue has been successfuly recieved. Expect related response within 2 business days...');
+                                      'Your issue has been successfuly recieved. Expect related response within 2 business days... \nYour issue was: \n TITLE: ${title} DESCRIPTION: ${desc}');
                                 },
                                 child: const Text('Submit'),
                                 style: ElevatedButton.styleFrom(

@@ -1,8 +1,10 @@
 import 'package:fl_fan/routes/create_forum.dart';
 import 'package:fl_fan/routes/create_post.dart';
+import 'package:fl_fan/routes/edit_campaign.dart';
 import 'package:fl_fan/routes/forum.dart';
-import 'package:fl_fan/routes/issue.dart';
+import 'package:fl_fan/routes/send_issue.dart';
 import 'package:fl_fan/routes/login.dart';
+import 'package:fl_fan/routes/my_issues.dart';
 import 'package:fl_fan/routes/signup.dart';
 import 'package:fl_fan/routes/team_login.dart';
 import 'package:fl_fan/routes/welcome.dart';
@@ -111,6 +113,14 @@ class _ConnectedFirebaseState extends State<ConnectedFirebase> {
               analytics: ConnectedFirebase.analytics,
               observer: ConnectedFirebase.observer,
             ),
+        'my_issues': (context) => MyIssues(
+              analytics: ConnectedFirebase.analytics,
+              observer: ConnectedFirebase.observer,
+            ),
+        // 'edit_post': (context) => EditCampaign(
+        //   analytics: ConnectedFirebase.analytics,
+        //   observer: ConnectedFirebase.observer,
+        // ),
 
         // When navigating to the "/second" route, build the SecondScreen widget.
         // '/second': (context) => const SecondScreen(),

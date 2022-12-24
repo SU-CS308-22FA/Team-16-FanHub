@@ -19,32 +19,34 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   List<dynamic> posts = [];
+  FirebaseAuth _auth1 = FirebaseAuth.instance;
+  // void _loadFeed(List<dynamic> posts) async {
+  //   FirebaseAuth _auth;
+  //   User? _user;
+  //   _auth = FirebaseAuth.instance;
+  //   _user = _auth.currentUser;
+  //   print(_user.toString());
+  //   if (_user != null) {
+  //     var all = await FirebaseFirestore.instance
+  //         .collection("posts")
+  //         .get()
+  //         .catchError((error) => print("Failed to get posts: $error"));
 
-  void _loadFeed(List<dynamic> posts) async {
-    FirebaseAuth _auth;
-    User? _user;
-    _auth = FirebaseAuth.instance;
-    _user = _auth.currentUser;
-    print(_user.toString());
-    if (_user != null) {
-      var all = await FirebaseFirestore.instance
-          .collection("posts")
-          .get()
-          .catchError((error) => print("Failed to get posts: $error"));
-
-      all.docs.forEach(
-        (doc) => {
-          posts.add(
-            Post(
-              title: doc['title'],
-              description: doc['description'],
-              photo: doc['image'],
-            ),
-          ),
-        },
-      );
-    }
-  }
+  //     all.docs.forEach(
+  //       (doc) => {
+  //         posts.add(
+  //           Post(
+  //             title: doc['title'],
+  //             description: doc['description'],
+  //             photo: doc['image'],
+  //             uid: doc['uid'],
+  //             // like_ct: doc['liked_by'].length,
+  //           ),
+  //         ),
+  //       },
+  //     );
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
   String title = "";
@@ -53,31 +55,34 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    void _loadFeed(List<dynamic> posts) async {
-      FirebaseAuth _auth;
-      User? _user;
-      _auth = FirebaseAuth.instance;
-      _user = _auth.currentUser;
-      print(_user.toString());
-      if (_user != null) {
-        var all = await FirebaseFirestore.instance
-            .collection("posts")
-            .get()
-            .catchError((error) => print("Failed to get posts: $error"));
+    // void _loadFeed(List<dynamic> posts) async {
+    //   FirebaseAuth _auth;
+    //   User? _user;
+    //   _auth = FirebaseAuth.instance;
+    //   _user = _auth.currentUser;
+    //   print(_user.toString());
+    //   if (_user != null) {
+    //     var all = await FirebaseFirestore.instance
+    //         .collection("posts")
+    //         .get()
+    //         .catchError((error) => print("Failed to get posts: $error"));
 
-        all.docs.forEach(
-          (doc) => {
-            posts.add(
-              Post(
-                title: doc['title'],
-                description: doc['description'],
-                photo: doc['image'],
-              ),
-            ),
-          },
-        );
-      }
-    }
+    //     // all.docs.forEach(
+    //     //   (doc) => {
+    //     //     posts.add(
+    //     //       Post(
+    //     //         title: doc['title'],
+    //     //         description: doc['description'],
+    //     //         photo: doc['image'],
+    //     //         uid: doc['uid'],
+
+    //     //         // like_ct: doc['liked_by'].length,
+    //     //       ),
+    //     //     ),
+    //     //   },
+    //     // );
+    //   }
+    // }
 
     MediaQueryData _mediaQueryData;
     double screenWidth;
@@ -282,8 +287,13 @@ class _CreatePostState extends State<CreatePost> {
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
                                     DBservice db = DBservice();
-                                    db.addPost(title, image_url, description);
-                                    _loadFeed(posts);
+                                    db.addPost(
+                                      title,
+                                      image_url,
+                                      description,
+                                      _auth1.currentUser!,
+                                    );
+                                    // _loadFeed(posts);
                                     Navigator.pushNamed(context, 'welcome');
                                   }
                                 },

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_fan/UI/post_tile.dart';
 import 'package:fl_fan/models/post.dart';
 import 'package:fl_fan/services/auth.dart';
+import 'package:fl_fan/services/db.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -33,6 +34,8 @@ class _SearchViewState extends State<SearchView> {
                   title: doc['title'],
                   description: doc['description'],
                   photo: doc['image'],
+                  uid: doc['uid'],
+                  // like_ct: doc['liked_by'].length,
                 ),
               ),
             }
@@ -67,8 +70,27 @@ class _SearchViewState extends State<SearchView> {
   Widget clmn(List<Post> list) {
     Widget temp = Column(children: []);
     setState(() {
-      temp =
-          Column(children: list.map((post) => PostTile(post: post)).toList());
+      temp = Column(
+          children: list
+              .map((post) => PostTile(
+                    post: post,
+                    icon: post.uid == _auth.currentUser!.uid
+                        ? Icon(Icons.delete)
+                        : SizedBox(),
+                    delete: () {
+                      setState(() {
+                        if (post.post_id == _auth.currentUser!.uid) {
+                          print('ben attim');
+                          DBservice().deletePost(_auth.currentUser!, post);
+                        }
+                      });
+                    },
+                    edit: () {},
+                    editIcon: post.uid == _auth.currentUser!.uid
+                        ? Icon(Icons.delete)
+                        : SizedBox(),
+                  ))
+              .toList());
     });
     return temp;
   }
