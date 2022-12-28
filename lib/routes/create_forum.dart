@@ -19,43 +19,40 @@ class CreateForum extends StatefulWidget {
 }
 
 class _CreateForumState extends State<CreateForum> {
-  List<dynamic> forum_posts = [];
-
-  void _loadForum(List<dynamic> posts, String title, String description) async {
-    FirebaseAuth _auth;
-    User? _user;
-    _auth = FirebaseAuth.instance;
-    _user = _auth.currentUser;
-    DBservice db = DBservice();
-    if (_user != null) {
-      String uid = _user.uid;
-      db.addForumPost(
-        title,
-        description,
-        _auth.currentUser!,
-      );
-      var all = await FirebaseFirestore.instance
-          .collection("forum_posts")
-          .get()
-          .catchError((error) => print("Failed to get posts: $error"));
-
-      all.docs.forEach(
-        (doc) => {
-          posts.add(
-            ForumPost(
-              title: doc['title'],
-              description: doc['description'],
-              sender_id: doc['sender_id'],
-              post_id: doc['post_id'],
-
-              // comments:
-              //     doc['comments'] != null ? doc['sender_id'] : 'No Comments',
-            ),
-          ),
-        },
-      );
-    }
-  }
+  // List<dynamic> forum_posts = [];
+  // void _loadForum(List<dynamic> posts, String title, String description) async {
+  // FirebaseAuth _auth;
+  // User? _user;
+  // _auth = FirebaseAuth.instance;
+  // _user = _auth.currentUser;
+  //   DBservice db = DBservice();
+  //   if (_user != null) {
+  //     String uid = _user.uid;
+  //     db.addForumPost(
+  //       title,
+  //       description,
+  //       _auth.currentUser!,
+  //     );
+  //     var all = await FirebaseFirestore.instance
+  //         .collection("forum_posts")
+  //         .get()
+  //         .catchError((error) => print("Failed to get posts: $error"));
+  //     all.docs.forEach(
+  //       (doc) => {
+  //         posts.add(
+  //           ForumPost(
+  //             title: doc['title'],
+  //             description: doc['description'],
+  //             sender_id: doc['sender_id'],
+  //             post_id: doc['post_id'],
+  //             // comments:
+  //             //     doc['comments'] != null ? doc['sender_id'] : 'No Comments',
+  //           ),
+  //         ),
+  //       },
+  //     );
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
   String title = "";
@@ -224,13 +221,17 @@ class _CreateForumState extends State<CreateForum> {
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
-                                    // DBservice db = DBservice();
-                                    // db.addForumPost(
-                                    //   title,
-                                    //   description,
-                                    //   _uid,
-                                    // );
-                                    _loadForum(forum_posts, title, description);
+                                    DBservice db = DBservice();
+                                    FirebaseAuth _auth;
+                                    User? _user;
+                                    _auth = FirebaseAuth.instance;
+                                    _user = _auth.currentUser;
+                                    db.addForumPost(
+                                      title,
+                                      description,
+                                      _user!,
+                                    );
+                                    // _loadForum(forum_posts, title, description);
                                     // Navigator.pushNamed(context, 'welcome');
                                     Navigator.pop(context);
                                   }

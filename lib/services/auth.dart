@@ -65,6 +65,18 @@ class AuthService {
     }
   }
 
+  Future adminLogin(String mail, String pass) async {
+    if (mail == 'admin@tff.com') {
+      try {
+        UserCredential result =
+            await _auth.signInWithEmailAndPassword(email: mail, password: pass);
+      } on FirebaseException catch (e) {
+        print(e.toString());
+        return null;
+      }
+    }
+  }
+
   Future signOut() async {
     try {
       return await _auth.signOut();

@@ -110,6 +110,20 @@ class _WelcomeState extends State<Welcome> {
               ),
               TextButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, 'admin_login');
+                },
+                child: const Text(
+                  'Are you Admin?',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: screenHeight / 48,
+              ),
+              TextButton(
+                onPressed: () {
                   Navigator.pushNamed(context, 'teamsu');
                 },
                 child: const Text(

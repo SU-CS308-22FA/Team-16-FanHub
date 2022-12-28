@@ -1,3 +1,4 @@
+import 'package:fl_fan/routes/admin_login.dart';
 import 'package:fl_fan/routes/create_forum.dart';
 import 'package:fl_fan/routes/create_post.dart';
 import 'package:fl_fan/routes/edit_campaign.dart';
@@ -117,6 +118,11 @@ class _ConnectedFirebaseState extends State<ConnectedFirebase> {
               analytics: ConnectedFirebase.analytics,
               observer: ConnectedFirebase.observer,
             ),
+        'admin_login': (context) => AdminLogin(
+              analytics: ConnectedFirebase.analytics,
+              observer: ConnectedFirebase.observer,
+            ),
+
         // 'edit_post': (context) => EditCampaign(
         //   analytics: ConnectedFirebase.analytics,
         //   observer: ConnectedFirebase.observer,

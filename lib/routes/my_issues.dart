@@ -33,7 +33,7 @@ class _MyIssuesState extends State<MyIssues> {
     _user = _auth.currentUser;
     var curr_users_issues = await FirebaseFirestore.instance
         .collection('issues')
-        .where('uid', isEqualTo: _user!.uid)
+        // .where('uid', isEqualTo: _user!.uid)
         .get();
     my_issues_list.clear();
     curr_users_issues.docs.forEach(
