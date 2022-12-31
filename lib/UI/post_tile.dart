@@ -236,9 +236,10 @@ class _PostTileState extends State<PostTile> {
                   onPressed: () {
                     //widget.updateLike(widget.post.postid),
                     // updateLike(widget.post.postid);
-                    _addLike(_auth.currentUser!, widget.post);
-                    print(widget.post.post_id);
-                    contains();
+                    // _addLike(_auth.currentUser!, widget.post);
+                    // print(widget.post.post_id);
+                    // contains();
+                    like_ct++;
                   },
                 ),
                 Text(

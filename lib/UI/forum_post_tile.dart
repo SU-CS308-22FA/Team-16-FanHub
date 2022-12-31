@@ -128,16 +128,6 @@ class _PostTileState extends State<ForumTile> {
                 ),
               ],
             ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                widget.post.title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             const SizedBox(
               height: 18,
             ),

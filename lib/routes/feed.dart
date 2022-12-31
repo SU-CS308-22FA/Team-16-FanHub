@@ -451,7 +451,7 @@ class _FeedState extends State<Feed> {
       return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('issue.jpg'),
+            image: AssetImage('assets/issue.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -562,7 +562,7 @@ class _FeedState extends State<Feed> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('/scaf.jpg'),
+                image: AssetImage('assets/scaf.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
