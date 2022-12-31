@@ -289,7 +289,7 @@ class _ForumState extends State<Forum> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('/scaf.jpg'),
+          image: AssetImage('assets/scaf.jpg'),
           fit: BoxFit.cover,
         ),
       ),

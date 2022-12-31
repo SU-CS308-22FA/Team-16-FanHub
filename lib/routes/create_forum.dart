@@ -71,7 +71,7 @@ class _CreateForumState extends State<CreateForum> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('fans_forum.jpg'),
+          image: AssetImage('assets/fans_forum.jpg'),
           fit: BoxFit.cover,
         ),
       ),

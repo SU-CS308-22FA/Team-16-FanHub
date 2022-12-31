@@ -80,7 +80,6 @@ class _SearchViewState extends State<SearchView> {
                     delete: () {
                       setState(() {
                         if (post.post_id == _auth.currentUser!.uid) {
-                          print('ben attim');
                           DBservice().deletePost(_auth.currentUser!, post);
                         }
                       });

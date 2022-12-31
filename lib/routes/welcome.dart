@@ -85,6 +85,7 @@ class _WelcomeState extends State<Welcome> {
                 height: screenHeight / 2.5,
               ),
               ElevatedButton(
+                key: const Key('login_button'),
                 onPressed: () {
                   Navigator.pushNamed(context, 'login');
                 },

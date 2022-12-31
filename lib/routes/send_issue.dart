@@ -74,7 +74,7 @@ class _IssueState extends State<Issue> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('issue.jpg'),
+          image: AssetImage('assets/issue.jpg'),
           fit: BoxFit.cover,
         ),
       ),
